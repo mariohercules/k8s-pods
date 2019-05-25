@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<definitions xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="wsservice" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="wsservice">
+<types>
+<xsd:schema targetNamespace="wsservice">
+ <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+ <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+
+			<element name="Course">
+				<complexType>
+					<sequence>
+						<element name="id" type="int"/>
+						<element name="title" type="string"/>
+						<element name="author" type="string"/>
+            <element name="description" type="string"/>
+            <element name="topic" type="string"/>
+            <element name="url" type="string"/>
+					</sequence>
+				</complexType>
+			</element>
+
+			<element name="ArrayOfCourses">
+				<complexType>
+					<sequence>
+						<element maxOccurs="unbounded" name="coursesList" type="xsd:Course"/>
+					</sequence>
+				</complexType>
+			</element>
+
+			<element name="ArrayOfCourse">
+				<complexType>
+					<sequence>
+						<element maxOccurs="unbounded" name="courseList" type="xsd:Course"/>
+					</sequence>
+				</complexType>
+			</element>      
+
+</xsd:schema>
+
+</types>
+<message name="courseRequest">
+  <part name="id" type="xsd:integer" /></message>
+
+<message name="courseResponse">
+  <part name="courseList" type="xsd:ArrayOfCourse" /></message>
+
+<message name="coursesRequest">
+  <part name="id" type="xsd:integer" /></message>
+
+<message name='coursesResponse'>
+  <part name='coursesList' type='xsd:ArrayOfCourses'/>
+</message>
+
+<portType name="wsservicePortType">
+  <operation name="course">
+    <input message="tns:courseRequest"/>
+    <output message="tns:courseResponse"/>
+  </operation>
+  <operation name="courses">
+    <input message="tns:coursesRequest"/>
+    <output message="tns:coursesResponse"/>
+  </operation>
+</portType>
+<binding name="wsserviceBinding" type="tns:wsservicePortType">
+  <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <operation name="course">
+    <soap:operation soapAction='urn:xmethods-delayed-quotes#course'/>
+    <input><soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+  <operation name="courses">
+    <soap:operation soapAction='urn:xmethods-delayed-quotes#courses'/>
+    <input><soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></input>
+    <output><soap:body use="encoded" namespace="urn:xmethods-delayed-quotes" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/></output>
+  </operation>
+</binding>
+<service name="wsservice">
+  <port name="wsservicePort" binding="tns:wsserviceBinding">
+    <soap:address location="http://localhost:8001/wsdl"/>
+  </port>
+</service>
+</definitions>
