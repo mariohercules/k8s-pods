@@ -14,7 +14,6 @@ var getCourses = function() {
 
 var app = express();
 
-// user routes
 const API_PATH = 'api';
 const API_PATH_VERSION = 'v1';
 const ENDPOINT = 'course';
@@ -27,8 +26,6 @@ app.get('/explorer', function(req, res) {
     res.sendFile(path.join(__dirname + '../../static/explorer.html'));
 });
 
-
-// Create an express server and a REST endpoint
 app.get(`/${API_PATH}/${API_PATH_VERSION}/${ENDPOINT}`, (req, res, next) => {
     res.setHeader('Content-Type', 'application/json');
     res.json(getCourses());
