@@ -1,0 +1,22 @@
+{
+  "name": "webservice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "soap": "node ./apis/soap/app.js",
+    "rest": "node ./apis/rest/app.js",
+    "graphql": "node ./apis/graphql/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mario Hercules",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "express-graphql": "^0.8.0",
+    "graphql": "^14.2.1",
+    "nodemon": "^1.19.0",
+    "path": "^0.12.7",
+    "soap": "^0.27.1"
+  }
+}
