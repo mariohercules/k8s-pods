@@ -50,4 +50,4 @@ app.delete(`/${API_PATH}/${API_PATH_VERSION}/${ENDPOINT}/:id`, (req, res, next) 
     res.json(message);
 });
 
-app.listen(3000, () => console.log('REST API now running on 0.0.0.0:3000/'));
+app.listen(4000, () => console.log('REST API now running on 0.0.0.0:3000/'));
