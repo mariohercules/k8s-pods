@@ -1,0 +1,23 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: soap-app
+spec:
+  selector:
+    matchLabels:
+      app: soap-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: soap-app
+        visualize: "true"
+    spec:
+      containers:
+      - name: soap-app
+        image: mariohercules/nodejs:1.0.0-wspy3.6
+        env:
+         - name: NODE_MODE
+           value: "soap"
+        ports:
+        - containerPort: 8001

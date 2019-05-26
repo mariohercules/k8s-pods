@@ -1,0 +1,23 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: graphql-app
+spec:
+  selector:
+    matchLabels:
+      app: graphql-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: graphql-app
+        visualize: "true"
+    spec:
+      containers:
+      - name: graphql-app
+        image: mariohercules/nodejs:1.0.0-wspy3.6
+        env:
+         - name: NODE_MODE
+           value: "graphql"
+        ports:
+        - containerPort: 4000
