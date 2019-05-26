@@ -2,6 +2,8 @@ apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
   name: rest-app
+  labels:
+    visualize: "true"   
 spec:
   selector:
     matchLabels:
@@ -15,7 +17,7 @@ spec:
     spec:
       containers:
       - name: rest-app
-        image: mariohercules/nodejs:1.0.0-wspy3.6
+        image: mariohercules/nodejs:1.0.1-wspy3.6
         env:
          - name: NODE_MODE
            value: "rest"
