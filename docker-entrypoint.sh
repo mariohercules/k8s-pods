@@ -20,6 +20,4 @@ if [ -z ${NODE_MODE+x} ] ; then
     exit 1
 fi
 
-#echo ${NODE_MODE}
-
 npm run ${NODE_MODE}
