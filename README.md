@@ -1,10 +1,10 @@
 # PROJECT
 Distributed load testing using kubernetes
 
-## ARCHITECTURE
+### ARCHITECTURE
 
 ![Screenshot](resources/Kubernetes-Diagram.png)
 
-## USING
+### USING
 
 In development
