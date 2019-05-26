@@ -1,8 +1,0 @@
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
-metadata:
-  name: rest-ingress
-spec:
-  backend:
-    serviceName: rest-app-service
-    servicePort: 80
