@@ -6,17 +6,17 @@ spec:
   rules:
   - http:
       paths:
-      - path: /
+      - path: /rest
         backend:
           serviceName: rest-app-service
-          servicePort: 4000
+          servicePort: 80
       - path: /graphql
         backend:
           serviceName: graphql-app-service
           servicePort: 4000                  
-      - path: /wsdl
+      - path: /soap
         backend:
           serviceName: soap-app-service
-          servicePort: 8001
+          servicePort: 8080
                 
       
