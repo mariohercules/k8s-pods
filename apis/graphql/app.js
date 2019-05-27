@@ -2,6 +2,10 @@ var express = require('express');
 var express_graphql = require('express-graphql');
 var { buildSchema } = require('graphql');
 
+var os = require('os'); 
+var networkInterfaces = os.networkInterfaces( );
+const ip = networkInterfaces['eth0'][0].address; 
+
 const courseService = require('../../services/course.service')
 
 var schema = buildSchema(`
@@ -39,4 +43,4 @@ app.use('/graphql', express_graphql({
     graphiql: true
 }));
 
-app.listen(4000, () => console.log('Server Now Running On 0.0.0.0:4000/graphql'));
+app.listen(4000, () => console.log('GraphQL server now running on ' + ip + ':4000/graphql'));

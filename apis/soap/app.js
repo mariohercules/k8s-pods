@@ -3,6 +3,10 @@ var http = require('http');
 var express = require('express');
 const bodyParser = require('body-parser');
 
+var os = require('os'); 
+var networkInterfaces = os.networkInterfaces( );
+const ip = networkInterfaces['eth0'][0].address; 
+
 const courseService = require('../../services/course.service')
 
 var getCourse = function(args) {     
@@ -35,10 +39,12 @@ var server = http.createServer(function(request,response) {
 var app = express();
 
 app.use(bodyParser.raw({type: function(){return true;}, limit: '5mb'}));
-app.listen(8001, function(){
+app.listen(8080, function(){
+
+    console.log('SOAP server now running on ' + ip + ':8080/soap?wsdl \n')
 
     let server = soap.listen(app, {
-        path: '/wsdl',
+        path: '/soap',
         services: myService,
         xml: xml,
         callback: function (err, res) {

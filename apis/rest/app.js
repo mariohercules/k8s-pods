@@ -3,6 +3,10 @@ var express_graphql = require('express-graphql');
 var { buildSchema } = require('graphql');
 var path = require('path');
 
+var os = require('os'); 
+var networkInterfaces = os.networkInterfaces( );
+const ip = networkInterfaces['eth0'][0].address; 
+
 const courseService = require('../../services/course.service')
 
 var getCourse = function(args) {     
@@ -11,18 +15,19 @@ var getCourse = function(args) {
 var getCourses = function() {
     return courseService.getAll();
 }
-
+ 
 var app = express();
 
-const API_PATH = 'api';
+const API_ROUTE = 'rest';
+const API_PATH = API_ROUTE + '/api';
 const API_PATH_VERSION = 'v1';
 const ENDPOINT = 'course';
 
-app.get('/', function(req, res) {
+app.get(`/${API_ROUTE}`, function(req, res) {
     res.sendFile(path.join(__dirname + '../../static/index.html'));
 });
 
-app.get('/explorer', function(req, res) {
+app.get(`/${API_ROUTE}/explorer`, function(req, res) {
     res.sendFile(path.join(__dirname + '../../static/explorer.html'));
 });
 
@@ -47,4 +52,4 @@ app.delete(`/${API_PATH}/${API_PATH_VERSION}/${ENDPOINT}/:id`, (req, res, next) 
     res.json(message);
 });
 
-app.listen(4000, () => console.log('REST API now running on 0.0.0.0:4000/'));
+app.listen(80, () => console.log('REST API now running on ' + ip + '/rest'));
