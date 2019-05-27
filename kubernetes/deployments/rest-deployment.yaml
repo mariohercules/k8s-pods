@@ -17,9 +17,9 @@ spec:
     spec:
       containers:
       - name: rest-app
-        image: mariohercules/nodejs:1.0.6-wspy3.6
+        image: mariohercules/nodejs:1.0.10-wspy3.6
         env:
          - name: NODE_MODE
            value: "rest"
         ports:
-        - containerPort: 4000
+        - containerPort: 80
