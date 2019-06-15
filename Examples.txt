@@ -1,0 +1,330 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp1-clusterip-svc
+  labels:
+    app: webapp1-clusterip
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: webapp1-clusterip
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: webapp1-clusterip-deployment
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: webapp1-clusterip
+    spec:
+      containers:
+      - name: webapp1-clusterip-pod
+        image: katacoda/docker-http-server:latest
+        ports:
+        - containerPort: 80
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp1-clusterip-targetport-svc
+  labels:
+    app: webapp1-clusterip-targetport
+spec:
+  ports:
+  - port: 8080
+    targetPort: 80
+  selector:
+    app: webapp1-clusterip-targetport
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: webapp1-clusterip-targetport-deployment
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: webapp1-clusterip-targetport
+    spec:
+      containers:
+      - name: webapp1-clusterip-targetport-pod
+        image: katacoda/docker-http-server:latest
+        ports:
+        - containerPort: 80
+---
+
+NODEPORT
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp1-nodeport-svc
+  labels:
+    app: webapp1-nodeport
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    nodePort: 30080
+  selector:
+    app: webapp1-nodeport
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: webapp1-nodeport-deployment
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: webapp1-nodeport
+    spec:
+      containers:
+      - name: webapp1-nodeport-pod
+        image: katacoda/docker-http-server:latest
+        ports:
+        - containerPort: 80
+---
+
+EXTERNAL IP
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp1-externalip-svc
+  labels:
+    app: webapp1-externalip
+spec:
+  ports:
+  - port: 80
+  externalIPs:
+  - 172.17.0.168
+  selector:
+    app: webapp1-externalip
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: webapp1-externalip-deployment
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: webapp1-externalip
+    spec:
+      containers:
+      - name: webapp1-externalip-pod
+        image: katacoda/docker-http-server:latest
+        ports:
+        - containerPort: 80
+---
+
+
+LOADBALANCE
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp1-loadbalancer-svc
+  labels:
+    app: webapp1-loadbalancer
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: webapp1-loadbalancer
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: webapp1-loadbalancer-deployment
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: webapp1-loadbalancer
+    spec:
+      containers:
+      - name: webapp1-loadbalancer-pod
+        image: katacoda/docker-http-server:latest
+        ports:
+        - containerPort: 80
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: azure-vote-back
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: azure-vote-back
+        visualize: "true"
+    spec:
+      containers:
+      - name: azure-vote-back
+        image: redis:latest
+        ports:
+        - containerPort: 6379
+          name: redis
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: azure-vote-back
+  labels:
+    app: azure-vote-back
+    visualize: "true"  
+spec:
+  ports:
+  - port: 6379
+  selector:
+    app: azure-vote-back
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: azure-vote-front
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: azure-vote-front
+        visualize: "true"
+    spec:
+      containers:
+      - name: azure-vote-front
+        image: microsoft/azure-vote-front:v1
+        ports:
+        - containerPort: 80
+        env:
+        - name: REDIS
+          value: "azure-vote-back"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: azure-vote-front
+  labels:
+    app: azure-vote-front
+    visualize: "true"  
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+  selector:
+    app: azure-vote-front
+---    
+kind: Pod
+apiVersion: v1
+metadata:
+  name: apple-app
+  labels:
+    app: apple
+spec:
+  containers:
+    - name: apple-app
+      image: hashicorp/http-echo
+      args:
+        - "-text=apple"
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: apple-service
+spec:
+  selector:
+    app: apple
+  ports:
+    - port: 5678 # Default port for image
+
+---
+
+kind: Pod
+apiVersion: v1
+metadata:
+  name: banana-app
+  labels:
+    app: banana
+spec:
+  containers:
+    - name: banana-app
+      image: hashicorp/http-echo
+      args:
+        - "-text=banana"
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: banana-service
+spec:
+  selector:
+    app: banana
+  ports:
+    - port: 5678 # Default port for image
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: example-ingress
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+      paths:
+        - path: /apple
+          backend:
+            serviceName: apple-service
+            servicePort: 5678
+        - path: /banana
+          backend:
+            serviceName: banana-service
+            servicePort: 5678        
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: app-ingress
+spec:
+  rules:
+  - host: rest.info
+    http:
+      paths:
+      - path: /rest
+        backend:
+          serviceName: rest-app-service
+          servicePort: 80  
+  - host: graphql.info
+    http:
+      paths:
+      - path: /graphql
+        backend:
+          serviceName: graphql-app-service
+          servicePort: 4000  
+  - host: soap.info
+    http:
+      paths:
+      - path: /soap
+        backend:
+          serviceName: soap-app-service
+          servicePort: 8080                                  
