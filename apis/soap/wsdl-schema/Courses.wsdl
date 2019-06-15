@@ -75,7 +75,7 @@
 </binding>
 <service name="wsservice">
   <port name="wsservicePort" binding="tns:wsserviceBinding">
-    <soap:address location="http://localhost:8001/wsdl"/>
+    <soap:address location="http://localhost:8080/soap"/>
   </port>
 </service>
 </definitions>
