@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: graphql-app
-        image: mariohercules/nodejs:1.0.10-wspy3.6
+        image: mariohercules/nodejs:1.0.12-wspy3.6
         env:
          - name: NODE_MODE
            value: "graphql"
