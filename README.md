@@ -49,7 +49,7 @@ $ minikube addons disable ingress
 $ minikube ip
 ```
 
-* Open the browser on https://<minikube-ip>
+* Open the browser on https://{minikube-ip-result}
 
 
 
