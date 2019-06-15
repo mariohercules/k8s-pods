@@ -1,0 +1,11 @@
+# folders
+kubernetes
+resources
+node_modules
+.vscode
+
+# files
+run.sh
+README.md
+Terminal.txt
+Dockerfile
