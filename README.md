@@ -9,6 +9,15 @@ Distributed load testing using kubernetes
 
 ### Create kubernetes cluster with minikube
 
+See [Installing Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)
+
+```
+$ minikube version
+$ kubectl version
+```
+
+See [Installing kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+
 ```
 $ minikube start
 ```
