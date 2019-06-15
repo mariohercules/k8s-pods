@@ -1,0 +1,61 @@
+
+# Create based on docker image
+$ kubectl run nginx --image=nginx:latest --port=81
+
+# Create deployments
+$ kubectl apply -f kubernetes/deployments/rest-deployment.yaml -f kubernetes/deployments/soap-deployment.yaml -f kubernetes/deployments/graphql-deployment.yaml
+$ kubectl delete -f kubernetes/deployments/rest-deployment.yaml -f kubernetes/deployments/soap-deployment.yaml -f kubernetes/deployments/graphql-deployment.yaml
+
+# Create services
+$ kubectl apply -f kubernetes/services/rest-service.yaml -f kubernetes/services/graphql-service.yaml  -f kubernetes/services/soap-service.yaml 
+$ kubectl delete -f kubernetes/services/rest-service.yaml -f kubernetes/services/graphql-service.yaml  -f kubernetes/services/soap-service.yaml 
+
+# Get PodIP
+$ kubectl get pods -o yaml | grep podIP
+
+# Create ingress
+
+$ minikube addons enable ingress
+$ minikube addons disable ingress
+
+$ kubectl apply -f kubernetes/ingress/app-ingress.yaml
+$ kubectl describe ingress app-ingress
+$ kubectl delete -f kubernetes/ingress/app-ingress.yaml 
+
+# Port-forward
+$ kubectl port-forward <pod-name> <port:port>
+
+# Port-forward Bind all networking
+$ kubectl port-forward --address 0.0.0.0 <pod-name> <port:port>
+
+kubectl port-forward graphql-app-86cbfcb4c4-8th98 80:80
+
+# change to minikube default registry
+$ eval $(minikube docker-env)
+
+# change docker default registry
+$ eval $(docker-machine env -u)
+
+# Reference
+* https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
+* https://kubernetes.io/docs/concepts/services-networking/service/
+* https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#creating-a-deployment
+* https://kubernetes.io/docs/tasks/configure-pod-container/
+* https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.11/#-strong-api-overview-strong-
+* https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/
+* https://kubernetes.io/docs/concepts/services-networking/ingress/
+* https://kubernetes.io/docs/reference/$ kubectl/cheatsheet/
+* https://www.json2yaml.com
+* https://medium.com/capital-one-tech/using-kubernetes-configmap-resources-for-dynamic-apps-9e23ef589121
+* https://medium.com/@zwhitchcox/matchlabels-labels-and-selectors-explained-in-detail-for-beginners-d421bdd05362
+* https://github.com/kubernetes/kubernetes/issues/36152
+* https://gist.github.com/kevin-smets/b91a34cea662d0c523968472a81788f7
+* https://gist.github.com/fsodogandji/8521333
+* https://github.com/istio/istio/issues/12593
+
+$ kubectl proxy --www=/Users//Downloads/gcp-live-k8s-visualizer --www-prefix=/ --api-prefix=/api/
+$ kubectl proxy --www=/Users//Downloads/gcp-live-k8s-visualizer --www-prefix=/my-mountpoint/ --api-prefix=/api/
+$ kubectl proxy --www=/Users//Downloads/gcp-live-k8s-visualizer --www-prefix=/my-mountpoint/ --api-prefix=/api/
+$ kubectl proxy --www=/Users//Downloads/gcp-live-k8s-visualizer --api-prefix=/api/
+$ kubectl run strzal --image=mariohercules/curl --restart='OnFailure' -i --tty --rm --command -- curl -X POST -F 'locust_count=100' -F 'hatch_rate=10' http://locust-master:8089/swarm
+$ kubectl run strzal --image=mariohercules/curl --restart='OnFailure' -i --tty --rm --command -- curl http://locust-master:8089/stop
