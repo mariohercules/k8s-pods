@@ -6,9 +6,11 @@ metadata:
     app: graphql-app
     visualize: "true"
 spec:
+  type: NodePort
   selector:
     app: graphql-app
   ports:
   - protocol: TCP
     port: 4000
     targetPort: 4000
+    name: http
