@@ -56,7 +56,7 @@ $ kubectl describe ingress app-ingress
 $ minikube addons enable ingress
 $ minikube addons disable ingress
 ```
-
+ 
 ### Accesss the service getting the minikube IP
 
 ```
